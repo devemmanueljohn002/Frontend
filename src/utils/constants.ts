@@ -1,0 +1,13 @@
+export const API_URL = import.meta.env.VITE_API_URL;
+
+export const USER_ROLES = {
+  ADMIN: "admin",
+  USER: "user",
+};
+
+export const ORDER_STATUS = {
+  PENDING: "pending",
+  PAID: "paid",
+  SHIPPED: "shipped",
+  DELIVERED: "delivered",
+};

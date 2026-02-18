@@ -1,0 +1,171 @@
+frontend/
+│
+├── public/
+│   ├── images/
+│   └── favicon.ico
+│
+├── src/
+│   ├── app/
+│   │   ├── routes.tsx
+│   │   └── App.tsx
+│   │
+│   ├── assets/
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Modal.tsx
+│   │   │   └── Loader.tsx
+│   │   │
+│   │   ├── layout/
+│   │   │   ├── Navbar.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   └── Sidebar.tsx
+│   │   │
+│   │   ├── product/
+│   │   │   ├── ProductCard.tsx
+│   │   │   ├── ProductGrid.tsx
+│   │   │   ├── ProductFilters.tsx
+│   │   │   └── ProductDetails.tsx
+│   │   │
+│   │   └── cart/
+│   │       ├── CartItem.tsx
+│   │       └── CartSummary.tsx
+│   │
+│   ├── features/   🔥 (Feature-Based Architecture)
+│   │   ├── auth/
+│   │   │   ├── authSlice.ts
+│   │   │   ├── authAPI.ts
+│   │   │   └── pages/
+│   │   │       ├── Login.tsx
+│   │   │       └── Register.tsx
+│   │   │
+│   │   ├── products/
+│   │   │   ├── productSlice.ts
+│   │   │   ├── productAPI.ts
+│   │   │   └── pages/
+│   │   │       ├── Products.tsx
+│   │   │       └── ProductPage.tsx
+│   │   │
+│   │   ├── cart/
+│   │   │   ├── cartSlice.ts
+│   │   │   └── Cart.tsx
+│   │   │
+│   │   ├── orders/
+│   │   │   ├── orderAPI.ts
+│   │   │   └── Orders.tsx
+│   │   │
+│   │   └── admin/
+│   │       ├── Dashboard.tsx
+│   │       ├── ManageProducts.tsx
+│   │       ├── ManageOrders.tsx
+│   │       └── ManageUsers.tsx
+│   │
+│   ├── hooks/
+│   │   ├── useAuth.ts
+│   │   ├── useCart.ts
+│   │   └── useDebounce.ts
+│   │
+│   ├── services/
+│   │   ├── axios.ts
+│   │   └── api.ts
+│   │
+│   ├── store/
+│   │   ├── store.ts
+│   │   └── rootReducer.ts
+│   │
+│   ├── types/
+│   │   ├── user.types.ts
+│   │   ├── product.types.ts
+│   │   └── order.types.ts
+│   │
+│   ├── utils/
+│   │   ├── formatCurrency.ts
+│   │   └── constants.ts
+│   │
+│   ├── pages/
+│   │   ├── Home.tsx
+│   │   ├── AboutUs.tsx
+│   │   ├── Contact.tsx
+│   │   └── NotFound.tsx
+│   │
+│   ├── main.tsx
+│   └── index.css
+│
+├── .env
+├── tsconfig.json
+└── vite.config.ts
+
+
+Backend
+
+backend/
+│
+├── src/
+│   ├── app.ts
+│   ├── server.ts
+│   │
+│   ├── config/
+│   │   ├── db.ts
+│   │   ├── env.ts
+│   │   └── logger.ts
+│   │
+│   ├── modules/ 🔥 (Domain-Based Structure)
+│   │
+│   │   ├── auth/
+│   │   │   ├── auth.controller.ts
+│   │   │   ├── auth.service.ts
+│   │   │   ├── auth.routes.ts
+│   │   │   ├── auth.validation.ts
+│   │   │   └── auth.model.ts
+│   │   │
+│   │   ├── user/
+│   │   │   ├── user.controller.ts
+│   │   │   ├── user.service.ts
+│   │   │   ├── user.routes.ts
+│   │   │   └── user.model.ts
+│   │   │
+│   │   ├── product/
+│   │   │   ├── product.controller.ts
+│   │   │   ├── product.service.ts
+│   │   │   ├── product.routes.ts
+│   │   │   ├── product.model.ts
+│   │   │   └── product.validation.ts
+│   │   │
+│   │   ├── order/
+│   │   │   ├── order.controller.ts
+│   │   │   ├── order.service.ts
+│   │   │   ├── order.routes.ts
+│   │   │   └── order.model.ts
+│   │   │
+│   │   ├── payment/
+│   │   │   ├── payment.controller.ts
+│   │   │   ├── payment.service.ts
+│   │   │   └── payment.routes.ts
+│   │   │
+│   │   └── notification/
+│   │       ├── email.service.ts
+│   │       └── whatsapp.service.ts
+│   │
+│   ├── middlewares/
+│   │   ├── auth.middleware.ts
+│   │   ├── role.middleware.ts
+│   │   ├── error.middleware.ts
+│   │   └── validate.middleware.ts
+│   │
+│   ├── utils/
+│   │   ├── ApiError.ts
+│   │   ├── catchAsync.ts
+│   │   └── generateToken.ts
+│   │
+│   ├── interfaces/
+│   │   └── index.ts
+│   │
+│   └── routes.ts
+│
+├── tests/
+├── .env
+├── tsconfig.json
+├── package.json
+└── nodemon.json
