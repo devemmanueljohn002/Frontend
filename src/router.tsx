@@ -1,14 +1,19 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+
 import Products from "./Features/products/pages/Products";
 import ProductPage from "./Features/products/pages/ProductPage";
+
 import Login from "./Features/auth/pages/Login";
 import Register from "./Features/auth/pages/Register";
 import ForgetPassword from "./Features/auth/pages/ForgetPassword";
 import ResetPassword from "./Features/auth/pages/ResetPassword";
+
 import ProtectedRoute from "./Features/admin/ProtectedRoute";
+import AdminRoute from "./Features/admin/AdminRoute";
+
 import Cart from "./Features/cart/Cart";
 import Orders from "./Features/orders/Orders";
-import AdminRoute from "./Features/admin/AdminRoute";
+
 import Dashboard from "./Features/admin/Dashboard";
 import ManageProducts from "./Features/admin/ManageProducts";
 import ManageOrders from "./Features/admin/ManageOrders";
@@ -26,13 +31,13 @@ const RouterConfig = () => {
       <Route path="/forgot-password" element={<ForgetPassword />} />
       <Route path="/reset-password/:token" element={<ResetPassword />} />
 
-      {/* Protected user routes */}
+      {/* Protected User Routes */}
       <Route element={<ProtectedRoute />}>
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
       </Route>
 
-      {/* Admin routes */}
+      {/* Admin Routes */}
       <Route element={<AdminRoute />}>
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/admin/products" element={<ManageProducts />} />
