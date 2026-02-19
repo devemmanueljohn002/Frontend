@@ -1,14 +1,23 @@
 import { combineReducers } from "@reduxjs/toolkit";
-
-// Example slices (you'll create these later)
-import userReducer from "../Features/auth/authSlice";
+import { authSlice } from "../Features/auth/authSlice";
 import productReducer from "../Features/products/productSlice";
-import orderReducer from "../Features/orders/Orders";
+import cartReducer from "../Features/cart/cartSlice";
+import userReducer from "../hooks/user/userSlice";
+import ordersReducer from "../Features/orders/ordersSlice";
 
+/* =========================
+   Root Reducer
+========================= */
 export const rootReducer = combineReducers({
+  auth: authSlice.reducer,
+  products: productReducer,
+  cart: cartReducer,
   user: userReducer,
-  product: productReducer,
-  order: orderReducer,
+  orders: ordersReducer, // ✅ Correct — NOT a component
 });
 
+/* =========================
+   Root State Type
+========================= */
 export type RootState = ReturnType<typeof rootReducer>;
+

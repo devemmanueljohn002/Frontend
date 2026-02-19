@@ -1,15 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
-import type { AppDispatch } from "../store/store";
 import type { RootState } from "../store/rootReducer";
-import { addToCart, clearCart, removeFromCart } from "../Features/cart/cartSlice";
+import type { CartItem } from "../Features/cart/cartSlice";
+import { addToCart, removeFromCart, clearCart } from "../Features/cart/cartSlice";
+import type { AppDispatch } from "../store/store";
 
 export const useCart = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const cartItems = useSelector(
-    (state: RootState) => state.carts.items || []
-  );
+  const cartItems = useSelector((state: RootState) => state.cart.items);
 
-  const addItem = (product: any) => {
+  const addItem = (product: CartItem) => {
     dispatch(addToCart(product));
   };
 
@@ -22,7 +21,7 @@ export const useCart = () => {
   };
 
   const totalItems = cartItems.reduce(
-    (acc, items) => acc + items.quantity,
+    (acc, item) => acc + item.quantity,
     0
   );
 

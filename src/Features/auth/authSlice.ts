@@ -1,4 +1,5 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 import { loginAPI, registerAPI, forgetPasswordAPI, resetPasswordAPI } from "./authAPI";
 
 interface User {
@@ -15,80 +16,113 @@ interface AuthState {
   error?: string;
 }
 
-const initialState: AuthState = {
+interface LoginDTO {
+  email: string;
+  password: string;
+}
+
+interface RegisterDTO {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface ResetPasswordDTO {
+  token: string;
+  newPassword: string;
+}
+
+export interface RejectError {
+  message: string;
+}
+
+/* ================================
+   Initial State
+================================ */
+
+export const initialState: AuthState = {
   user: undefined,
   loading: false,
   error: undefined,
 };
 
-// Async thunks
-export const login = createAsyncThunk("auth/login", async (payload: any, { rejectWithValue }) => {
-  try {
-    return await loginAPI(payload);
-  } catch (err: any) {
-    return rejectWithValue(err.response?.data?.message || err.message);
-  }
-});
-
-export const register = createAsyncThunk("auth/register", async (payload: any, { rejectWithValue }) => {
-  try {
-    return await registerAPI(payload);
-  } catch (err: any) {
-    return rejectWithValue(err.response?.data?.message || err.message);
-  }
-});
-
-export const forgetPassword = createAsyncThunk("auth/forgetPassword", async (email: string, { rejectWithValue }) => {
-  try {
-    return await forgetPasswordAPI(email);
-  } catch (err: any) {
-    return rejectWithValue(err.response?.data?.message || err.message);
-  }
-});
-
-export const resetPassword = createAsyncThunk(
-  "auth/resetPassword",
-  async ({ token, newPassword }: { token: string; newPassword: string }, { rejectWithValue }) => {
-    try {
-      return await resetPasswordAPI(token, newPassword);
-    } catch (err: any) {
-      return rejectWithValue(err.response?.data?.message || err.message);
-    }
-  }
-);
-
-const authSlice = createSlice({
+export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    logout: (state) => {
-      state.user = undefined;
-      localStorage.removeItem("user");
-    },
-    setUser: (state, action: PayloadAction<User>) => {
-      state.user = action.payload;
-      localStorage.setItem("user", JSON.stringify(action.payload));
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(login.pending, (state) => { state.loading = true; state.error = undefined; })
-      .addCase(login.fulfilled, (state, action: PayloadAction<User>) => { state.loading = false; state.user = action.payload; localStorage.setItem("user", JSON.stringify(action.payload)); })
-      .addCase(login.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-
-      .addCase(register.pending, (state) => { state.loading = true; state.error = undefined; })
-      .addCase(register.fulfilled, (state, action: PayloadAction<User>) => { state.loading = false; state.user = action.payload; localStorage.setItem("user", JSON.stringify(action.payload)); })
-      .addCase(register.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-
-      .addCase(forgetPassword.pending, (state) => { state.loading = true; state.error = undefined; })
-      .addCase(forgetPassword.fulfilled, (state) => { state.loading = false; })
-      .addCase(forgetPassword.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; })
-
-      .addCase(resetPassword.pending, (state) => { state.loading = true; state.error = undefined; })
-      .addCase(resetPassword.fulfilled, (state) => { state.loading = false; })
-      .addCase(resetPassword.rejected, (state, action) => { state.loading = false; state.error = action.payload as string; });
+      .addCase(login.pending, (state) => {
+        state.loading = true;
+        state.error = undefined;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
   },
 });
 
-export const { logout, setUser } = authSlice.actions;
-export default authSlice.reducer;
+export const login = createAsyncThunk<
+  User,
+  LoginDTO,
+  { rejectValue: string }
+>("auth/login", async (payload, { rejectWithValue }) => {
+  try {
+    return await loginAPI(payload);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+    return rejectWithValue("Something went wrong");
+  }
+});
+
+export const register = createAsyncThunk<
+  User,
+  RegisterDTO,
+  { rejectValue: string }
+>("auth/register", async (payload, { rejectWithValue }) => {
+  try {
+    return await registerAPI(payload);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+    return rejectWithValue("Something went wrong");
+  }
+});
+
+export const forgetPassword = createAsyncThunk<
+  void,
+  string,
+  { rejectValue: string }
+>("auth/forgetPassword", async (email, { rejectWithValue }) => {
+  try {
+    return await forgetPasswordAPI(email);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+    return rejectWithValue("Something went wrong");
+  }
+});
+
+export const resetPassword = createAsyncThunk<
+  void,
+  ResetPasswordDTO,
+  { rejectValue: string }
+>("auth/resetPassword", async ({ token, newPassword }, { rejectWithValue }) => {
+  try {
+    return await resetPasswordAPI(token, newPassword);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+    return rejectWithValue("Something went wrong");
+  }
+});
